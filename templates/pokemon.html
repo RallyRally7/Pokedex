@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ pokemon.name }}</title>
+</head>
+<body>
+    <h1>{{ pokemon.name }} #{{ pokemon.id }}</h1>
+    <img src="{{ pokemon.image }}">
+    <p>Type: {{ pokemon.types | join(", ") }}</p>
+    <p>Height: {{ pokemon.height }}</p>
+    <p>Weight: {{ pokemon.weight }}</p>
+    {% for stat_name, stat_value in pokemon.stats.items() %}
+    <p>{{ stat_name }}: {{ stat_value }}</p>
+    {% endfor %}
+    <a href="/">Search again</a>
+</body>
+</html>

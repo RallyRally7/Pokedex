@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokédex</title>
+</head>
+<body>
+    <h1>Pokédex</h1>
+    <input type="text" id="search" placeholder="Search Pokémon...">
+    <ul id="pokemon-list"></ul>
+
+    <script>
+        let allPokemon = [];
+
+        // Load all Pokémon names on page load
+        fetch("/pokemon-list")
+            .then(res => res.json())
+            .then(data => {
+                allPokemon = data.pokemon;
+                renderList(allPokemon);
+            });
+
+        function renderList(names) {
+            const list = document.getElementById("pokemon-list");
+            list.innerHTML = names.slice(0, 50).map(name => {
+                const id = allPokemon.indexOf(name) + 1;
+                const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+                return `<li>
+                    <a href="/pokemon/${name}">
+                        <img src="${img}" width="50">
+                        ${name}
+                    </a>
+                </li>`;
+            }).join("");
+        }
+
+        document.getElementById("search").addEventListener("input", function() {
+            const query = this.value.toLowerCase();
+            const filtered = allPokemon.filter(name => name.includes(query));
+            renderList(filtered);
+        });
+    </script>
+</body>
+</html>
