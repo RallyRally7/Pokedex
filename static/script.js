@@ -36,15 +36,18 @@ function baseBonus(statKey) {
     return statKey === HP_KEY ? HP_BASE_BONUS : OTHER_BASE_BONUS;
 }
 
+function paintRow(row, value) {
+    const fill = row.querySelector(".stat-bar-fill");
+    const valueLabel = row.querySelector(".stat-value");
+    fill.style.width = Math.min(100, (value / MAX_STAT) * 100) + "%";
+    fill.style.backgroundColor = statToColor(value);
+    valueLabel.textContent = value;
+}
+
 function updateRealRow(statKey, points) {
     const real = baseStats[statKey] + baseBonus(statKey) + points;
     const row = document.querySelector(`#real-section .stat-row[data-stat-key="${statKey}"]`);
-    const fill = row.querySelector(".stat-bar-fill");
-    const valueLabel = row.querySelector(".stat-value");
-
-    fill.style.width = Math.min(100, (real / MAX_STAT) * 100) + "%";
-    fill.style.backgroundColor = statToColor(real);
-    valueLabel.textContent = real;
+    paintRow(row, real);
 }
 
 function getAllPoints() {
@@ -85,12 +88,7 @@ document.querySelectorAll(".stat-points-input").forEach(input => {
 
 document.querySelectorAll("#base-section .stat-row[data-stat-key]").forEach(row => {
     const statKey = row.dataset.statKey;
-    const fill = row.querySelector(".stat-bar-fill");
-    const valueLabel = row.querySelector(".stat-value");
-    const value = baseStats[statKey];
-    fill.style.width = Math.min(100, (value / MAX_STAT) * 100) + "%";
-    fill.style.backgroundColor = statToColor(value);
-    valueLabel.textContent = value;
+    paintRow(row, baseStats[statKey]);
 });
 
 Object.keys(baseStats).forEach(statKey => updateRealRow(statKey, 0));
