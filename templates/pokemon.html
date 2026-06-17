@@ -34,6 +34,7 @@
     <a href="/">Search again</a>
 
     <div id="stat-data" data-stats="{{ pokemon.stats | tojson | forceescape }}" hidden></div>
+    <div id="rules-data" data-rules="{{ rules | tojson | forceescape }}" hidden></div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -1,12 +1,9 @@
-const HP_KEY = "HP";
-const HP_BASE_BONUS = 75;
-const OTHER_BASE_BONUS = 20;
-const MAX_STAT = 360;
-const MAX_TOTAL_POINTS = 66;
-
 const baseStats = JSON.parse(document.getElementById("stat-data").dataset.stats);
+const rules = JSON.parse(document.getElementById("rules-data").dataset.rules);
 
-function statToColor(value, minVal = 20, maxVal = 360) {
+const HP_KEY = "HP";
+
+function statToColor(value, minVal = 20, maxVal = rules.maxStat) {
     const stops = [
         [220, 20, 60],   // red
         [255, 140, 0],   // orange
@@ -33,13 +30,13 @@ function statToColor(value, minVal = 20, maxVal = 360) {
 }
 
 function baseBonus(statKey) {
-    return statKey === HP_KEY ? HP_BASE_BONUS : OTHER_BASE_BONUS;
+    return statKey === HP_KEY ? rules.hpBonus : rules.otherBonus;
 }
 
 function paintRow(row, value) {
     const fill = row.querySelector(".stat-bar-fill");
     const valueLabel = row.querySelector(".stat-value");
-    fill.style.width = Math.min(100, (value / MAX_STAT) * 100) + "%";
+    fill.style.width = Math.min(100, (value / rules.maxStat) * 100) + "%";
     fill.style.backgroundColor = statToColor(value);
     valueLabel.textContent = value;
 }
@@ -62,12 +59,12 @@ function updateTotal() {
     const points = getAllPoints();
     const total = Object.values(points).reduce((sum, v) => sum + v, 0);
     const totalEl = document.getElementById("points-total");
-    totalEl.textContent = `Points used: ${total} / ${MAX_TOTAL_POINTS}`;
-    totalEl.classList.toggle("over-limit", total > MAX_TOTAL_POINTS);
+    totalEl.textContent = `Points used: ${total} / ${rules.maxTotalPoints}`;
+    totalEl.classList.toggle("over-limit", total > rules.maxTotalPoints);
 }
 
 function setPoints(statKey, points) {
-    points = Math.max(0, Math.min(32, points));
+    points = Math.max(0, Math.min(rules.maxPointsPerStat, points));
     document.querySelectorAll(`.stat-slider[data-stat-key="${statKey}"]`).forEach(el => el.value = points);
     document.querySelectorAll(`.stat-points-input[data-stat-key="${statKey}"]`).forEach(el => el.value = points);
     updateRealRow(statKey, points);

@@ -10,7 +10,7 @@
         type="range"
         class="stat-slider"
         min="0"
-        max="32"
+        max="{{ rules.maxPointsPerStat }}"
         value="0"
         data-stat-key="{{ stat_key }}"
     >
@@ -18,7 +18,7 @@
         type="number"
         class="stat-points-input"
         min="0"
-        max="32"
+        max="{{ rules.maxPointsPerStat }}"
         value="0"
         data-stat-key="{{ stat_key }}"
     >
