@@ -11,7 +11,6 @@
     <script>
         let allPokemon = [];
 
-        // Load all Pokémon names on page load
         fetch("/pokemon-list")
             .then(res => res.json())
             .then(data => {

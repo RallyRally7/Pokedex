@@ -2,33 +2,7 @@
 <html>
 <head>
     <title>{{ pokemon.name }}</title>
-    <style>
-        .stat-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 6px 0;
-        }
-        .stat-label {
-            width: 60px;
-            font-weight: bold;
-        }
-        .stat-bar-container {
-            background-color: #ddd;
-            width: 200px;
-            height: 14px;
-            border-radius: 7px;
-            overflow: hidden;
-        }
-        .stat-bar-fill {
-            height: 100%;
-            border-radius: 7px;
-        }
-        .stat-value {
-            width: 40px;
-            text-align: right;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>{{ pokemon.name }} #{{ pokemon.id }}</h1>
@@ -39,29 +13,17 @@
 
     <h2>Base Stats</h2>
     {% for stat_name, stat_value in pokemon.stats.items() %}
-        <div class="stat-row">
-            <span class="stat-label">{{ stat_name }}</span>
-            <div class="stat-bar-container">
-                <div class="stat-bar-fill" style="width: {{ (stat_value / 360 * 100) | round(1) }}%; background-color: {{ stat_value | stat_color }};"></div>
-            </div>
-            <span class="stat-value">{{ stat_value }}</span>
-        </div>
+        {% include "stat_row.html" %}
     {% endfor %}
 
     <h2>Real Stats</h2>
     {% for stat_name, stat_value in pokemon.stats.items() %}
         {% if stat_name == "HP" %}
-            {% set real_value = stat_value + 75 %}
+            {% set stat_value = stat_value + 75 %}
         {% else %}
-            {% set real_value = stat_value + 20 %}
+            {% set stat_value = stat_value + 20 %}
         {% endif %}
-        <div class="stat-row">
-            <span class="stat-label">{{ stat_name }}</span>
-            <div class="stat-bar-container">
-                <div class="stat-bar-fill" style="width: {{ (real_value / 360 * 100) | round(1) }}%; background-color: {{ real_value | stat_color }};"></div>
-            </div>
-            <span class="stat-value">{{ real_value }}</span>
-        </div>
+        {% include "stat_row.html" %}
     {% endfor %}
 
     <a href="/">Search again</a>
