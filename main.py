@@ -12,6 +12,33 @@ STAT_NAMES = {
     "speed": "Speed"
 }
 
+def stat_to_color(value, min_val=20, max_val=360):
+    stops = [
+        (220, 20, 60),    # red
+        (255, 140, 0),    # orange
+        (255, 215, 0),    # yellow
+        (50, 180, 50),    # green
+        (90, 170, 255),   # light blue
+        (20, 30, 150),    # dark blue
+    ]
+    t = (value - min_val) / (max_val - min_val)
+    t = max(0, min(1, t))
+
+    n_segments = len(stops) - 1
+    segment = t * n_segments
+    idx = int(segment)
+    if idx >= n_segments:
+        idx = n_segments - 1
+    local_t = segment - idx
+
+    c1, c2 = stops[idx], stops[idx + 1]
+    r = round(c1[0] + (c2[0] - c1[0]) * local_t)
+    g = round(c1[1] + (c2[1] - c1[1]) * local_t)
+    b = round(c1[2] + (c2[2] - c1[2]) * local_t)
+    return f"rgb({r}, {g}, {b})"
+
+app.jinja_env.filters["stat_color"] = stat_to_color
+
 @app.route("/")
 def index():
     return render_template("index.html")
