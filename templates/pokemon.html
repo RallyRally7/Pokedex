@@ -9,9 +9,21 @@
     <p>Type: {{ pokemon.types | join(", ") }}</p>
     <p>Height: {{ pokemon.height }}</p>
     <p>Weight: {{ pokemon.weight }}</p>
+    <h2>Base Stats</h2>
     {% for stat_name, stat_value in pokemon.stats.items() %}
-    <p>{{ stat_name }}: {{ stat_value }}</p>
+        <p>{{ stat_name }}: {{ stat_value }}</p>
     {% endfor %}
+
+    <h2>Real Stats</h2>
+    {% for stat_name, stat_value in pokemon.stats.items() %}
+        {% if stat_name == "HP" %}
+            <p>{{ stat_name }}: {{ stat_value + 75}}</p>
+        {% endif %}
+        {% if stat_name != "HP" %}
+            <p>{{ stat_name }}: {{ stat_value + 20 }}</p>
+        {% endif %}
+    {% endfor %}
+
     <a href="/">Search again</a>
 </body>
 </html>
