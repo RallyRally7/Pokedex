@@ -16,7 +16,7 @@
         {% include "stat_row.html" %}
     {% endfor %}
 
-    <h2>Real Stats</h2>
+    <h2>Real Stats at lvl. 50</h2>
     {% for stat_name, stat_value in pokemon.stats.items() %}
         {% if stat_name == "HP" %}
             {% set stat_value = stat_value + 75 %}
