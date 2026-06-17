@@ -18,8 +18,25 @@
 .stat-bar-fill {
     height: 100%;
     border-radius: 7px;
+    transition: width 0.15s ease, background-color 0.15s ease;
 }
 .stat-value {
     width: 40px;
     text-align: right;
+}
+
+/* EV allocation controls */
+.stat-slider {
+    width: 120px;
+}
+.stat-points-input {
+    width: 45px;
+    text-align: center;
+}
+.points-total {
+    margin-top: 12px;
+    font-weight: bold;
+}
+.points-total.over-limit {
+    color: #dc143c;
 }

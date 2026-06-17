@@ -12,20 +12,28 @@
     <p>Weight: {{ pokemon.weight }}</p>
 
     <h2>Base Stats</h2>
-    {% for stat_name, stat_value in pokemon.stats.items() %}
-        {% include "stat_row.html" %}
-    {% endfor %}
+    <div id="base-section">
+        {% for stat_name, stat_value in pokemon.stats.items() %}
+            {% set stat_key = stat_name %}
+            {% set show_controls = false %}
+            {% include "stat_row.html" %}
+        {% endfor %}
+    </div>
 
-    <h2>Real Stats at lvl. 50</h2>
-    {% for stat_name, stat_value in pokemon.stats.items() %}
-        {% if stat_name == "HP" %}
-            {% set stat_value = stat_value + 75 %}
-        {% else %}
-            {% set stat_value = stat_value + 20 %}
-        {% endif %}
-        {% include "stat_row.html" %}
-    {% endfor %}
+    <h2>Real Stats <span style="font-size: 0.7em; font-weight: normal;">(allocate up to 32 points per stat, 66 total)</span></h2>
+    <div id="real-section">
+        {% for stat_name, stat_value in pokemon.stats.items() %}
+            {% set stat_key = stat_name %}
+            {% set show_controls = true %}
+            {% include "stat_row.html" %}
+        {% endfor %}
+    </div>
+
+    <p class="points-total" id="points-total">Points used: 0 / 66</p>
 
     <a href="/">Search again</a>
+
+    <div id="stat-data" data-stats="{{ pokemon.stats | tojson | forceescape }}" hidden></div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

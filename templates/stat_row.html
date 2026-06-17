@@ -1,8 +1,26 @@
-<!-- This is a single stat row -->
-<div class="stat-row">
+<div class="stat-row" data-stat-key="{{ stat_key }}">
     <span class="stat-label">{{ stat_name }}</span>
     <div class="stat-bar-container">
-        <div class="stat-bar-fill" style="width: {{ (stat_value / 360 * 100) | round(1) }}%; background-color: {{ stat_value | stat_color }};"></div>
+        <div class="stat-bar-fill"></div>
     </div>
-    <span class="stat-value">{{ stat_value }}</span>
+    <span class="stat-value"></span>
+
+    {% if show_controls %}
+    <input
+        type="range"
+        class="stat-slider"
+        min="0"
+        max="32"
+        value="0"
+        data-stat-key="{{ stat_key }}"
+    >
+    <input
+        type="number"
+        class="stat-points-input"
+        min="0"
+        max="32"
+        value="0"
+        data-stat-key="{{ stat_key }}"
+    >
+    {% endif %}
 </div>
