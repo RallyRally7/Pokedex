@@ -8,6 +8,7 @@
     <h1>{{ pokemon.name }} #{{ pokemon.id }}</h1>
     <img src="{{ pokemon.image }}">
     <p>Type: {{ pokemon.types | join(", ") }}</p>
+    <p>Abilities: {{ pokemon.abilities | join(", ") }}</p>
     <p>Height: {{ pokemon.height }}</p>
     <p>Weight: {{ pokemon.weight }}</p>
 

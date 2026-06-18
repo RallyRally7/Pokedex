@@ -30,6 +30,7 @@ def get_pokemon(name):
         "height": data["height"],
         "weight": data["weight"],
         "types": [t["type"]["name"] for t in data["types"]],
+        "abilities": [a["ability"]["name"] for a in data["abilities"]],
         "stats": {STAT_NAMES[s["stat"]["name"]]: s["base_stat"] for s in data["stats"]},
         "image": data["sprites"]["front_default"]
     }
