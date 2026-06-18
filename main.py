@@ -19,7 +19,7 @@ MAX_TOTAL_POINTS = 66
 MAX_STAT = 360
 
 def get_pokemon(name):
-    """Fetch a Pokémon from PokeAPI and shape it for the template. Returns None on failure."""
+    """Fetch a Pokémon from PokeAPI"""
     response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{name.lower()}")
     if response.status_code != 200:
         return None
@@ -43,6 +43,7 @@ def index():
 def search():
     pokemon = get_pokemon(request.form["pokemon"])
     if pokemon:
+        pokemon["weaknesses"] = get_type_effectiveness(pokemon["types"])
         return render_template("pokemon.html", pokemon=pokemon, rules=get_rules())
     return render_template("index.html", error="Pokémon not found!")
 
@@ -50,6 +51,7 @@ def search():
 def pokemon(name):
     pokemon = get_pokemon(name)
     if pokemon:
+        pokemon["weaknesses"] = get_type_effectiveness(pokemon["types"])
         return render_template("pokemon.html", pokemon=pokemon, rules=get_rules())
     return render_template("index.html", error="Pokémon not found!")
 
@@ -61,7 +63,7 @@ def pokemon_list():
     return {"pokemon": names}
 
 def get_rules():
-    """Bundle the stat-allocation game rules to hand to the template/JS."""
+    """Get the rules for the Pokémon stat point allocation"""
     return {
         "hpBonus": HP_BASE_BONUS,
         "otherBonus": OTHER_BASE_BONUS,
@@ -70,5 +72,27 @@ def get_rules():
         "maxStat": MAX_STAT,
     }
 
+TYPE_CACHE = {}
+ALL_TYPES = [
+    "normal","fire","water","electric","grass","ice",
+    "fighting","poison","ground","flying","psychic","bug",
+    "rock","ghost","dragon","dark","steel","fairy"
+]
+
+def get_type_effectiveness(types):
+    combined = {}
+    for t in types:
+        if t not in TYPE_CACHE:
+            r = requests.get(f"https://pokeapi.co/api/v2/type/{t}")
+            TYPE_CACHE[t] = r.json()["damage_relations"]
+        relations = TYPE_CACHE[t]
+        for atk_type in relations["double_damage_from"]:
+            combined[atk_type["name"]] = combined.get(atk_type["name"], 1) * 2
+        for atk_type in relations["half_damage_from"]:
+            combined[atk_type["name"]] = combined.get(atk_type["name"], 1) * 0.5
+        for atk_type in relations["no_damage_from"]:
+            combined[atk_type["name"]] = combined.get(atk_type["name"], 1) * 0
+    # Return all 18 types, defaulting to 1 if not in combined
+    return {t: combined.get(t, 1) for t in ALL_TYPES}
 if __name__ == "__main__":
     app.run(debug=True)

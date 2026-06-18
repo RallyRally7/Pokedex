@@ -25,7 +25,7 @@
     text-align: right;
 }
 
-/* EV allocation controls */
+/* Points allocation controls */
 .stat-slider {
     width: 120px;
 }
@@ -40,3 +40,61 @@
 .points-total.over-limit {
     color: #dc143c;
 }
+
+.type-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 48px);
+    gap: 4px;
+    margin: 8px 0;
+}
+.type-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+.type-tag {
+    width: 48px;
+    padding: 3px 0;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.7em;
+    font-weight: bold;
+    text-align: center;
+}
+.type-mult {
+    width: 48px;
+    height: 20px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+}
+.mult-4    { background: #c00; }
+.mult-2    { background: #e62829; }
+.mult-0_5  { background: #3a7d12; }
+.mult-0_25 { background: #1a5c00; }
+.mult-0    { background: #888; }
+.mult-1    { background: transparent; color: transparent; }
+
+/* Type colours */
+.type-normal   { background: #9fa19f; }
+.type-fire     { background: #e62829; }
+.type-water    { background: #2980ef; }
+.type-electric { background: #fac000; color: #333; }
+.type-grass    { background: #3fa129; }
+.type-ice      { background: #3dcef3; color: #333; }
+.type-fighting { background: #ff8000; }
+.type-poison   { background: #9141cb; }
+.type-ground   { background: #915121; }
+.type-flying   { background: #81b9ef; color: #333; }
+.type-psychic  { background: #ef4179; }
+.type-bug      { background: #91a119; }
+.type-rock     { background: #afa981; color: #333; }
+.type-ghost    { background: #704170; }
+.type-dragon   { background: #5060e1; }
+.type-dark     { background: #624d4e; }
+.type-steel    { background: #60a1b8; }
+.type-fairy    { background: #ef70ef; }

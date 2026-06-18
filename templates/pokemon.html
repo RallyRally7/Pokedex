@@ -8,6 +8,23 @@
     <h1>{{ pokemon.name }} #{{ pokemon.id }}</h1>
     <img src="{{ pokemon.image }}">
     <p>Type: {{ pokemon.types | join(", ") }}</p>
+    <h2>Type Effectiveness</h2>
+    <div class="type-grid">
+        {% for atk_type, mult in pokemon.weaknesses.items() %}
+        <div class="type-cell">
+            <div class="type-tag type-{{ atk_type }}">{{ atk_type[:3].upper() }}</div>
+            <div class="type-mult mult-{{ mult | string | replace('.', '_') }}">
+                {% if mult == 4 %}×4
+                {% elif mult == 2 %}×2
+                {% elif mult == 0.5 %}½
+                {% elif mult == 0.25 %}¼
+                {% elif mult == 0 %}✕
+                {% else %} {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
     <p>Abilities: {{ pokemon.abilities | join(", ") }}</p>
     <p>Height: {{ pokemon.height }}</p>
     <p>Weight: {{ pokemon.weight }}</p>
