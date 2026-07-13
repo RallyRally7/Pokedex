@@ -7,6 +7,9 @@
 <body>
     <h1>{{ pokemon.name }} #{{ pokemon.id }}</h1>
     <img src="{{ pokemon.image }}">
+
+    <button> Add to team </button>
+
     <p>Type: {{ pokemon.types | join(", ") }}</p>
     <h2>Type Effectiveness</h2>
     <div class="type-grid">
