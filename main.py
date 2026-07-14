@@ -62,6 +62,10 @@ def pokemon_list():
     names = [p["name"] for p in data["results"]]
     return {"pokemon": names}
 
+@app.route("/team")
+def team():
+    return render_template("team.html")
+
 def get_rules():
     """Get the rules for the Pokémon stat point allocation"""
     return {
