@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
-
-
-
+    Team
 </head>
+<body>
+    <ul id="team"></ul>
+
+    <script>
+        const names = JSON.parse(localStorage.getItem("team") || "[]")
+        const list = document.getElementById("team")
+        list.innerHTML = names.map(name => `<li>${name}</li>`).join("")
+
+    </script>
+
+</body>
+
 </html>
