@@ -8,7 +8,16 @@
     <h1>{{ pokemon.name }} #{{ pokemon.id }}</h1>
     <img src="{{ pokemon.image }}">
 
-    <button> Add to team </button>
+    <button onclick="addToTeam('{{pokemon.name}}')"> Add to team </button>
+    <script>
+            function addToTeam(pokemon){
+                const team = localStorage.getItem("team")||"[]"
+                const parsedteam = JSON.parse(team)
+                parsedteam.push(pokemon)
+                const stringify = JSON.stringify(parsedteam)
+                const setpokemon = localStorage.setItem("team",stringify)
+            }
+    </script>
 
     <p>Type: {{ pokemon.types | join(", ") }}</p>
     <h2>Type Effectiveness</h2>
